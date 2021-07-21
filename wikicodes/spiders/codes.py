@@ -44,7 +44,7 @@ class CodesSpider(scrapy.Spider):
                 pass
 
     def get_subdivisions(self, response):
-        divisions = {}
+        divisions = []
         item = {}
         try:
             #  rows = response.xpath('//*[contains(@class,"wikitable sortable")]//tr')
@@ -70,11 +70,10 @@ class CodesSpider(scrapy.Spider):
                     url = url.extract()
 
                     if code and name:
-                        divisions.update({
-                            name: {
-                                'code': code,
-                                'url': url,
-                            }
+                        divisions.append({
+                            "name": name,
+                            'code': code,
+                            'url': url,
                         })
             item.update({
                 'Subdivisions': divisions,
