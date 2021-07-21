@@ -48,28 +48,34 @@ class CodesSpider(scrapy.Spider):
         item = {}
         try:
             #  rows = response.xpath('//*[contains(@class,"wikitable sortable")]//tr')
-            table = response.xpath('//*[contains(@class,"wikitable sortable")]')[0]
-            rows = table.xpath('*//tr')
+            for table in response.xpath('//*[contains(@class,"wikitable sortable")]'):
+                rows = table.xpath('*//tr')
 
-            # Start looping through all rows, but add only with both code
-            # and name extracted
-            for row in rows:
-                # Extract code
-                code = row.xpath('td/span/text()')
-                if not code:
-                    code = row.xpath('td/span/span/text()')
-                code = code.extract_first()
+                # Start looping through all rows, but add only with both code
+                # and name extracted
+                for row in rows:
+                    # Extract code
+                    code = row.xpath('td/span/text()')
+                    if not code:
+                        code = row.xpath('td/span/span/text()')
+                    code = code.extract_first()
 
-                # Extract name
-                name = row.xpath('td/a//text()')
-                if not name:
-                    name = row.xpath('td/span/a//text()')
-                name = name.extract_first()
+                    # Extract name
+                    name = row.xpath('td/a//text()')
+                    url = row.xpath('td/a/@href')
+                    if not name:
+                        name = row.xpath('td/span/a//text()')
+                        url = row.xpath('td/span/a/@href')
+                    name = name.extract_first()
+                    url = url.extract()
 
-                if code and name:
-                    divisions.update({
-                        name: code
-                    })
+                    if code and name:
+                        divisions.update({
+                            name: {
+                                'code': code,
+                                'url': url,
+                            }
+                        })
             item.update({
                 'Subdivisions': divisions,
                 'Subdivisions URL': response.url,
