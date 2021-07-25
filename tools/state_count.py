@@ -15,4 +15,5 @@ with open("../country_codes.json") as f:
 		print(country["country_iso2"], l)
 		print(state_codes)
 		sum += l
+	print("country_count:",len(data))
 	print("sum:",sum)
