@@ -4,3 +4,7 @@ country-wiki/
 page/
 country-page/
 *.out
+bad_wiki_page_id.html
+simple_country_codes.json
+std_country_codes.json
+.vscode/
