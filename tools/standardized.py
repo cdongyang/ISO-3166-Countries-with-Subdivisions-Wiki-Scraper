@@ -64,6 +64,15 @@ with open("../country_codes.json", 'r') as f:
 			"url": country["url"],
 			"wiki_page_id": country["wiki_page_id"],
 		}
+		if std_country["country_iso2"] == "TW":
+			std_country["language_names"] = {
+				"en": "Taiwan",
+				"zh-hans": "台湾",
+				"zh-hant": "台灣",
+				"zh": "台湾",
+				"ja": "台湾",
+				"pt": "Taiwan"
+			}
 		subdivisions = []
 		exist = {}
 		if not "subdivisions" in country:

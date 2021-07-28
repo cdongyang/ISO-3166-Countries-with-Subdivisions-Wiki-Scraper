@@ -94,13 +94,16 @@ class CodesSpider(scrapy.Spider):
 
         # get language names from wiki page
         entity = {}
-        name = page_dir+result[0]+".json"
-        #name = url.format_page_filename(url, result[0])
+        wiki_page_id = result[0]
+        # fix TW language name
+        if wiki_page_id == "Q865": 
+            wiki_page_id = "Q7676514"
+        name = page_dir+wiki_page_id+".json"
         try:
             f = open(name)
             entity = json.load(f)
         except FileNotFoundError:
-            with requests.get("https://www.wikidata.org/wiki/Special:EntityData/"+result[0]+".json") as state_response:
+            with requests.get("https://www.wikidata.org/wiki/Special:EntityData/"+wiki_page_id+".json") as state_response:
                 if state_response.status_code != 200:
                     raise Exception(state_response.status_code)
                 entity = state_response.json()
@@ -109,8 +112,8 @@ class CodesSpider(scrapy.Spider):
         else:
             f.close()
         return {
-            "wiki_page_id": result[0],
-            "language_names": entity["entities"][result[0]]["labels"],
+            "wiki_page_id": wiki_page_id,
+            "language_names": entity["entities"][wiki_page_id]["labels"],
         }
 
     def get_subdivisions(self, response):
