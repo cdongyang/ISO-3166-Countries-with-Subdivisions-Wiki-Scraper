@@ -66,12 +66,88 @@ with open("../country_codes.json", 'r') as f:
 		}
 		if std_country["country_iso2"] == "TW":
 			std_country["language_names"] = {
+				"it": "Taiwan",
+				"pt": "Taiwan",
+				"sv": "Taiwan",
+				"de": "Taiwan",
 				"en": "Taiwan",
-				"zh-hans": "台湾",
-				"zh-hant": "台灣",
-				"zh": "台湾",
 				"ja": "台湾",
-				"pt": "Taiwan"
+				"nl": "Taiwan",
+				"es": "Taiwán",
+				"fr": "Taïwan",
+				"ko": "타이완",
+				"zh": "台湾",
+				"zh-hant": "臺灣"
+			}
+		elif std_country["country_iso2"] == "KR":
+			std_country["language_names"] = {
+				"es": "Corea del Sur",
+				"fr": "Corée du Sud",
+				"it": "Corea del Sud",
+				"ko": "대한민국",
+				"pt": "Coreia do Sul",
+				"de": "Südkorea",
+				"en": "South Korea",
+				"ja": "大韓民国",
+				"nl": "Zuid-Korea",
+				"zh": "韩国",
+				"sv": "Sydkorea"
+			}
+		elif std_country["country_iso2"] == "CN":
+			std_country["language_names"] = {
+				"it": "Cina",
+				"pt": "China",
+				"ja": "中国",
+				"zh": "中国",
+				"fr": "Chine",
+				"ko": "중국",
+				"sv": "Kina",
+				"de": "China",
+				"en": "China",
+				"nl": "China",
+				"es": "China"
+			}
+		elif std_country["country_iso2"] == "NL":
+			std_country["language_names"] = {
+				"zh": "荷兰",
+				"es": "Países Bajos",
+				"it": "Paesi Bassi",
+				"pt": "Países Baixos",
+				"ja": "オランダ",
+				"nl": "Nederland",
+				"fr": "Pays-Bas",
+				"ko": "네덜란드",
+				"sv": "Nederländerna",
+				"de": "Niederlande",
+				"en": "Netherlands"
+			}
+		elif std_country["country_iso2"] == "ML":
+			std_country["language_names"] = {
+				"sv": "Mali",
+				"zh": "马里",
+				"es": "Malí",
+				"ja": "マリ共和国",
+				"nl": "Mali",
+				"de": "Mali",
+				"it": "Mali",
+				"ko": "말리",
+				"en": "Mali",
+				"fr": "Mali",
+				"pt": "Mali"
+			}
+		elif std_country["country_iso2"] == "CZ":
+			std_country["language_names"] = {
+				"zh": "捷克",
+				"fr": "Tchéquie",
+				"ja": "チェコ",
+				"nl": "Tsjechië",
+				"de": "Tschechien",
+				"en": "Czechia",
+				"it": "Repubblica Ceca",
+				"ko": "체코",
+				"pt": "Tcheca",
+				"sv": "Tjeckien",
+				"es": "Chequia"
 			}
 		subdivisions = []
 		exist = {}
@@ -81,8 +157,9 @@ with open("../country_codes.json", 'r') as f:
 		for subdivision in country["subdivisions"]:
 			#if subdivision["code"] in ["TD-BA", "CN-HK", "DO-DN", "GE-AB"]: # repeat
 			#	break
+			if subdivision["code"] in ["CN-HK", "CN-TW", "CN-MO"]:
+				continue
 			if subdivision["code"] in exist:
-				break
 				raise Exception(subdivision["code"])
 			state = {
 				"code": subdivision["code"],
